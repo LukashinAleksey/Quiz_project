@@ -25,6 +25,7 @@ public class QuestionService {
         }
         if (questionDto.getTextQuestion() != null) { question.setTextQuestion(questionDto.getTextQuestion());}
         if (questionDto.getRightAnswer() != null) { question.setRightAnswer(questionDto.getRightAnswer());}
+        if (questionDto.getComplexity() != null) {question.setComplexity(questionDto.getComplexity());}
 
         questionRepository.save(question);
     }
