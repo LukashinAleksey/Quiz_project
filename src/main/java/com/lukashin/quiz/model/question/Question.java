@@ -20,4 +20,7 @@ public class Question {
 
     @Column(name = "right_answer")
     private String rightAnswer;
+
+    @Column(name = "complexity")
+    private Complexity complexity;
 }
