@@ -1,4 +1,4 @@
-package com.lukashin.quiz.model.question;
+package com.lukashin.quiz.model;
 
 public enum Complexity {
    Easy, Normal, Hard
