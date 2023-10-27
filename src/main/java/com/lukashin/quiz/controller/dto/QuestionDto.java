@@ -1,9 +1,7 @@
 package com.lukashin.quiz.controller.dto;
 
-import com.lukashin.quiz.model.question.Complexity;
+import com.lukashin.quiz.model.Complexity;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class QuestionDto {
