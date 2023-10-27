@@ -4,7 +4,6 @@ import com.lukashin.quiz.controller.dto.QuestionDto;
 import com.lukashin.quiz.model.question.Question;
 import com.lukashin.quiz.service.QuestionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionController {
 
-    @Autowired
-    private QuestionService questionService;
+    private final QuestionService questionService;
 
     @PostMapping("/")
     public String addNewQuestion(@RequestBody QuestionDto questionDto){

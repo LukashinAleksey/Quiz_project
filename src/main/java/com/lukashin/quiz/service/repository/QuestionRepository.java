@@ -1,13 +1,9 @@
 package com.lukashin.quiz.service.repository;
 
-import com.lukashin.quiz.model.Complexity;
 import com.lukashin.quiz.model.question.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    public List<Question> findQuestionByComplexity(Complexity complexity);
 }
