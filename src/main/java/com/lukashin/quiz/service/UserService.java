@@ -13,5 +13,7 @@ public interface UserService {
 
     public List<User> getAllUsers();
 
-    void deleteUserById(Long id);
+    public void deleteUserById(Long id);
+
+    //todo add method getAllGame(Long id);
 }

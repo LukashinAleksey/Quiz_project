@@ -5,12 +5,12 @@ import com.lukashin.quiz.model.Complexity;
 import com.lukashin.quiz.model.question.Question;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 
 public interface QuestionService {
 
-    public void addOrUpdateQuestion(QuestionDto questionDto);
+    public Question addOrUpdateQuestion(QuestionDto questionDto);
 
     public List<Question> getAllQuestion();
 
@@ -18,5 +18,5 @@ public interface QuestionService {
 
     public void deleteById(Long id);
 
-    public Set<Question> getQuestionToGame(Byte numberOfQuestion, Complexity complexity);
+    public List<Question> getQuestionToGame(Byte numberOfQuestion, Complexity complexity);
 }

@@ -3,11 +3,13 @@ package com.lukashin.quiz.controller.dto;
 import com.lukashin.quiz.model.Complexity;
 import com.lukashin.quiz.model.User.User;
 import com.lukashin.quiz.model.question.Question;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
+@Builder
 public class GameDTO {
     private Long idGame;
     private Complexity complexity;

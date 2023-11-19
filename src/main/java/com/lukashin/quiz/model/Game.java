@@ -4,21 +4,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lukashin.quiz.model.User.User;
 import com.lukashin.quiz.model.question.Question;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "game")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_game")
     private Long idGame;
 
     @Column(name = "game_complexity")
@@ -28,15 +32,19 @@ public class Game {
     @Column(name = "number_of_question")
     private byte numberOfQuestion;
 
-    @ManyToMany
-    @JsonIgnore
+    @ManyToMany()
+//    @JsonIgnore
     @JoinTable(name = "game_question",
-    joinColumns = {@JoinColumn(name = "idGame")},
-    inverseJoinColumns = {@JoinColumn(name = "idQuestion")})
-    private Set<Question> questionSet = new HashSet<>();
+    joinColumns = {@JoinColumn(name = "id_game")},
+    inverseJoinColumns = {@JoinColumn(name = "id_question")})
+    private List<Question> questionList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    @JsonIgnore
+//    @JsonIgnore
     private User user;
+
+    @OneToMany(mappedBy = "game",
+            cascade = CascadeType.ALL)
+    private List<Answer> answers;
 }
