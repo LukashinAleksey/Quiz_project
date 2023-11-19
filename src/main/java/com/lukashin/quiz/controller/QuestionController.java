@@ -5,6 +5,8 @@ import com.lukashin.quiz.model.question.Question;
 import com.lukashin.quiz.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,15 +20,15 @@ public class QuestionController {
     private QuestionService questionService;
 
     @PostMapping("/")
-    public String addNewQuestion(@RequestBody QuestionDto questionDto){
-        questionService.addOrUpdateQuestion(questionDto);
-        return "The question is saved";
+    @ResponseStatus(HttpStatus.CREATED)
+    public Question addNewQuestion(@RequestBody QuestionDto questionDto){
+        return questionService.addOrUpdateQuestion(questionDto);
     }
 
     @PutMapping("/")
-    public String updateQuestion(@RequestBody QuestionDto questionDto){
-        questionService.addOrUpdateQuestion(questionDto);
-        return "The question is update";
+    public ResponseEntity<Question> updateQuestion(@RequestBody QuestionDto questionDto){
+        Question updatedEmployee = questionService.addOrUpdateQuestion(questionDto);
+        return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
     }
 
     @GetMapping("/")
@@ -40,8 +42,8 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteQuestionById(@PathVariable Long id){
+    public ResponseEntity<String> deleteQuestionById(@PathVariable Long id){
         questionService.deleteById(id);
-        return "Question with id = " + id + " was delete!";
+        return new ResponseEntity<>("Question with id = " + id + " was delete!", HttpStatus.OK) ;
     }
 }

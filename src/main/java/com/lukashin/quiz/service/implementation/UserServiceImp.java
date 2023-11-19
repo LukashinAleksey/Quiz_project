@@ -26,7 +26,6 @@ public class UserServiceImp implements UserService {
         } else {
             user = new User();
         }
-
         if (userDto.getUserName() != null){user.setUserName(userDto.getUserName());}
 
         userRepository.save(user);

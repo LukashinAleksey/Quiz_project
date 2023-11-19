@@ -6,10 +6,9 @@ import com.lukashin.quiz.model.User.User;
 import com.lukashin.quiz.model.question.Question;
 
 import java.util.List;
-import java.util.Set;
 
 public interface GameService {
-    public void createGame(GameDTO gameDTO, User user, Set<Question> questions);
+    public Game createGame(GameDTO gameDTO, User user, List<Question> questions);
 
     public Game getGameById(Long id);
 
@@ -17,5 +16,5 @@ public interface GameService {
 
     public List<Game> getAllGame();
 
-//    public void addQuestionInGame();
+    public Long getResultGame(Long id);
 }

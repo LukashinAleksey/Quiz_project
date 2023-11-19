@@ -1,5 +1,6 @@
 package com.lukashin.quiz.service.implementation;
 
+import com.lukashin.quiz.Exeption.ResourceNotFoundException;
 import com.lukashin.quiz.controller.dto.QuestionDto;
 import com.lukashin.quiz.model.Complexity;
 import com.lukashin.quiz.model.question.Question;
@@ -9,10 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class QuestionServiceImp implements QuestionService {
@@ -25,10 +24,15 @@ public class QuestionServiceImp implements QuestionService {
 
     @Override
     @Transactional
-    public void addOrUpdateQuestion(QuestionDto questionDto) {
+    public Question addOrUpdateQuestion(QuestionDto questionDto) {
         Question question;
         if (questionDto.getIdQuestion() != null) {
-            question = getQuestionById(questionDto.getIdQuestion());
+            Optional<Question> saveQuestion = questionRepository.findById(questionDto.getIdQuestion());
+            if (!saveQuestion.isPresent()){
+                throw new ResourceNotFoundException("Question with id = " + questionDto.getIdQuestion() + " not found");
+            } else {
+                question = saveQuestion.get();
+            }
         } else {
             question = new Question();
         }
@@ -42,7 +46,7 @@ public class QuestionServiceImp implements QuestionService {
             question.setComplexity(questionDto.getComplexity());
         }
 
-        questionRepository.save(question);
+        return questionRepository.save(question);
     }
 
     @Override
@@ -54,7 +58,8 @@ public class QuestionServiceImp implements QuestionService {
     @Override
     @Transactional
     public Question getQuestionById(Long idQuestion) {
-        return questionRepository.findById(idQuestion).get();
+        return questionRepository.findById(idQuestion)
+                .orElseThrow(() -> new ResourceNotFoundException("Question with id = " + idQuestion + " not found"));
     }
 
     @Override
@@ -64,10 +69,9 @@ public class QuestionServiceImp implements QuestionService {
     }
 
     @Override
-    public Set<Question> getQuestionToGame(Byte numberOfQuestion, Complexity complexity) {
-        Set<Question> questions = new HashSet<>();
+    public List<Question> getQuestionToGame(Byte numberOfQuestion, Complexity complexity) {
         List<Question> questionList = questionRepository.findQuestionByComplexity(complexity);
         Collections.shuffle(questionList);
-        return questionList.stream().limit(numberOfQuestion).collect(Collectors.toSet());
+        return questionList.stream().limit(numberOfQuestion).toList();
     }
 }
